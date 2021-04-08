@@ -17,29 +17,30 @@ public class Inventory_Screen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory__screen);
 
-        EditText prod_name = findViewById(R.id.prod_name);
-        EditText prod_type = findViewById(R.id.prod_type);
-        EditText prod_price = findViewById(R.id.prod_price);
+        final EditText prod_name = findViewById(R.id.prod_name);
+        final EditText prod_type = findViewById(R.id.prod_type);
+        final EditText prod_price = findViewById(R.id.prod_price);
         Button save_inventory = findViewById(R.id.btn_save);
 
         save_inventory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveInventory(prod_name.getText().toString(),prod_type.getText().toString(),prod_price.getText().toString());
+
             }
         });
 
     }
 
-    private void saveInventory(String prod_name, String prod_type, String prod_price){
-        AppDatabase db = AppDatabase.getINSTANCE(this.getApplicationContext());
+    private void saveInventory(String product_name, String product_type, String price){
+        AppDatabase db = AppDatabase.getDbINSTANCE(this.getApplicationContext());
 
         Inventory inventory = new Inventory();
-        inventory.product_name = prod_name;
-        inventory.product_type = prod_type;
-        inventory.price = prod_price;
+        inventory.product_name = product_name;
+        inventory.product_type = product_type;
+        inventory.price = price;
 
-        db.inventoryDao().insertInventory();
+        db.inventoryDao().insertInventory(inventory);
 
         finish();
     }
